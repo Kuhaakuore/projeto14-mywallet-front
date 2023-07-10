@@ -53,6 +53,7 @@ export default function Home() {
     );
     if (!confirmation) return;
     api.deleteTransaction(_id, token);
+    setTransactions(transactions.filter(transactions => transactions._id === _id));
     loadTransactions();
   }
 
