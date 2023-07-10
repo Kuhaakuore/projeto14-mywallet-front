@@ -1,6 +1,7 @@
-import { TransactionContainer, Value } from "./styled";
+import { DeleteButton, TransactionContainer, Value } from "./styled";
 
-export default function Transaction({ value, type, description, date }) {
+export default function Transaction({ _id, value, type, description, date, token, handleDeleteRegistry}) {
+
   return (
     <>
       <TransactionContainer>
@@ -8,9 +9,12 @@ export default function Transaction({ value, type, description, date }) {
           <p>{date}</p>
           <span>{description}</span>
         </div>
-        <Value type={type}>
-          {Number(value).toFixed(2).toString().replace(".", ",")}
-        </Value>
+        <div>
+          <Value type={type}>
+            {Number(value).toFixed(2).toString().replace(".", ",")}
+          </Value>
+          <DeleteButton onClick={() => handleDeleteRegistry(_id, token)}>X</DeleteButton>
+        </div>
       </TransactionContainer>
     </>
   );

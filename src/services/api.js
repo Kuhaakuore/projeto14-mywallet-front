@@ -34,11 +34,20 @@ function getTransactions(token) {
     return promise;
 }
 
+function deleteTransaction(_id, token) {
+    const config = createConfig(token);
+    
+    const promise = axios.delete(`${VITE_API_URL}/${_id}`, config);
+
+    return promise;
+}
+
 const api  = {
     login,
     signUp,
     createTransaction,
-    getTransactions
+    getTransactions,
+    deleteTransaction
 }
 
 export default api;

@@ -40,10 +40,20 @@ export default function Home() {
     if (!transactions) return;
     let result = 0;
     transactions.forEach((transaction) => {
-      if (transaction.type === "entrada") return (result += Number(transaction.value));
+      if (transaction.type === "entrada")
+        return (result += Number(transaction.value));
       return (result -= Number(transaction.value));
     });
     setBalance(result);
+  }
+
+  function handleDeleteRegistry(_id, token) {
+    const confirmation = confirm(
+      "Tem certeza de que deseja excluir esta transação?"
+    );
+    if (!confirmation) return;
+    api.deleteTransaction(_id, token);
+    loadTransactions();
   }
 
   useEffect(() => {
@@ -76,14 +86,25 @@ export default function Home() {
         <ContentContainer>
           <TransactionsContainer>
             {transactions.map((transaction) => {
-              return <Transaction key={transaction._id} {...transaction} />;
+              return (
+                <Transaction
+                  key={transaction._id}
+                  {...transaction}
+                  token={auth}
+                  handleDeleteRegistry={handleDeleteRegistry}
+                />
+              );
             })}
           </TransactionsContainer>
-          <BalanceContainer 
-          color={balance < 0 ? "#C70000" : "#03AC00"}>
+          <BalanceContainer color={balance < 0 ? "#C70000" : "#03AC00"}>
             <div>SALDO</div>
             <div>
-              <span>{Number(Math.abs(balance)).toFixed(2).toString().replace(".", ",")}</span>
+              <span>
+                {Number(Math.abs(balance))
+                  .toFixed(2)
+                  .toString()
+                  .replace(".", ",")}
+              </span>
             </div>
           </BalanceContainer>
         </ContentContainer>

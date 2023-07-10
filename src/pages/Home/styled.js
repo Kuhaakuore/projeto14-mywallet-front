@@ -62,8 +62,9 @@ const ContentContainer = styled.div`
 const TransactionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 446px;
+  overflow-x: hidden;
 `;
 
 const BalanceContainer = styled.div`
