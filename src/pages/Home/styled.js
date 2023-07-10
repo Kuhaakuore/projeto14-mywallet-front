@@ -54,7 +54,7 @@ const ContentContainer = styled.div`
   padding: 23px 11px 10px 11px;
   display: flex;
   flex-direction: column;
-  min-height: 446px;
+  min-height: calc(100vh - 230px);
   max-height: 446px;
   justify-content: space-between;
 `;
@@ -63,7 +63,6 @@ const TransactionsContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 446px;
   overflow-x: hidden;
 `;
 
@@ -86,6 +85,7 @@ const BalanceContainer = styled.div`
 const Footer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 15px;
 `;
 
 const ButtonContainer = styled.div`

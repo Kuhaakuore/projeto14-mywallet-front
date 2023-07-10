@@ -13,21 +13,23 @@ function App() {
     <>
       <AuthProvider>
         <RegistryProvider>
-          <Container>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/cadastro" element={<Register />} />
-              <Route path="/home" element={<Home />} />
-              <Route
-                path="/nova-transacao/:tipo"
-                element={<CreateTransaction />}
-              />
-              <Route
-                path="/editar-registro/:tipo/:id"
-                element={<EditRegistry />}
-              />
-            </Routes>
-          </Container>
+          <PageContainer>
+            <ContentContainer>
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/cadastro" element={<Register />} />
+                <Route path="/home" element={<Home />} />
+                <Route
+                  path="/nova-transacao/:tipo"
+                  element={<CreateTransaction />}
+                />
+                <Route
+                  path="/editar-registro/:tipo/:id"
+                  element={<EditRegistry />}
+                />
+              </Routes>
+            </ContentContainer>
+          </PageContainer>
         </RegistryProvider>
       </AuthProvider>
     </>
@@ -36,10 +38,17 @@ function App() {
 
 export default App;
 
-const Container = styled.div`
+const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #8c11be;
+`;
+
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  background-color: #8c11be;
+  max-width: 375px;
 `;
