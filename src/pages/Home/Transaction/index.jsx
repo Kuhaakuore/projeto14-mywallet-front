@@ -21,14 +21,14 @@ export default function Transaction({
             to={`/editar-registro/${type}/${_id}`}
             onClick={() => setRegistry({ value, description })}
           >
-            <span>{description}</span>
+            <span data-test="registry-name">{description}</span>
           </Link>
         </div>
         <div>
-          <Value type={type}>
+          <Value type={type} data-test="registry-amount">
             {Number(value).toFixed(2).toString().replace(".", ",")}
           </Value>
-          <DeleteButton onClick={() => handleDeleteRegistry(_id, token)}>
+          <DeleteButton onClick={() => handleDeleteRegistry(_id, token)} data-test="registry-delete">
             X
           </DeleteButton>
         </div>

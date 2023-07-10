@@ -83,7 +83,7 @@ export default function EditRegistry() {
         <Button
           type="submit"
           // disabled={isLoading}
-          data-test="sign-in-submit"
+          data-test="registry-save"
         >
           {/* {isLoading ? (
             <Loader type="ThreeDots" color="#FFFFFF" height={50} width={50} />

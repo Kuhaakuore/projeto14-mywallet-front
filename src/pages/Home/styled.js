@@ -33,7 +33,8 @@ const MessageContainer = styled.div`
   padding: 11px;
   display: flex;
   flex-direction: column;
-  min-height: 446px;
+  min-height: calc(100vh - 230px);
+  max-height: 446px;
   justify-content: center;
 
   p {
