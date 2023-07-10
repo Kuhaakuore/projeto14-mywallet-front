@@ -52,9 +52,12 @@ export default function Home() {
       "Tem certeza de que deseja excluir esta transação?"
     );
     if (!confirmation) return;
-    api.deleteTransaction(_id, token);
-    setTransactions(transactions.filter(transactions => transactions._id === _id));
-    loadTransactions();
+    const promise = api.deleteTransaction(_id, token);
+    promise.then(() => loadTransactions());
+    promise.catch((res) => {
+      //   setIsLoading(false);
+      alert(res.response.data.message);
+    });
   }
 
   useEffect(() => {
