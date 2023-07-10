@@ -9,6 +9,7 @@ const StyledLink = styled(Link)`
   font-weight: 700;
   line-height: normal;
   margin-top: 34px;
+  align-self: center;
 `;
 
 export default StyledLink;

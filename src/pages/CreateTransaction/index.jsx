@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/img/logo.png";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
-import {
-  Container,
-  Form,
-  Input,
-  Button,
-  StyledLink,
-} from "../../components/FormComponents";
+import { Form, Input, Button } from "../../components/FormComponents";
 import useAuth from "../../hooks/useAuth";
+import Header from "../../components/PageComponents/Header";
+import { styled } from "styled-components";
+import dayjs from "dayjs";
 
-export default function Login() {
+export default function CreateTransaction() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    value: "",
+    description: "",
   });
   //   const [isLoading, setIsLoading] = useState(false);
-  const { auth, login } = useAuth();
+  const { auth } = useAuth();
+  const { tipo } = useParams();
 
   useEffect(() => {
-    if (auth) {
-      navigate("/home");
+    if (!auth) {
+      navigate("/");
     }
   }, []);
 
@@ -34,14 +31,18 @@ export default function Login() {
     e.preventDefault();
 
     // setIsLoading(true);
-    const promise = api.login({
-      ...formData,
-    });
+    const promise = api.createTransaction(
+      {
+        ...formData,
+        date: dayjs().format("DD/MM")
+      },
+      tipo,
+      auth
+    );
 
     promise.then((res) => {
       //   setIsLoading(false);
-      login(res.data);
-      navigate("/nova-transacao/entrada");
+      console.log(res);
     });
     promise.catch((res) => {
       //   setIsLoading(false);
@@ -51,30 +52,29 @@ export default function Login() {
 
   return (
     <Container>
-      <img alt="logo.svg" src={Logo} />
-
+      <Header>Nova {tipo == "entrada" ? "entrada" : "saída"}</Header>
       <Form onSubmit={handleSubmit}>
         <Input
-          type="email"
-          placeholder="E-mail"
-          name="email"
+          type="number"
+          placeholder="Valor"
+          name="value"
           onChange={handleChange}
-          value={formData.email}
+          value={formData.value}
           //   disabled={isLoading}
-          
+          required
           autoComplete="true"
-          data-test="email"
+          data-test="registry-amount-input"
         />
         <Input
-          type="password"
-          placeholder="Senha"
-          name="password"
+          type="text"
+          placeholder="Descrição"
+          name="description"
           onChange={handleChange}
-          value={formData.password}
+          value={formData.description}
           //   disabled={isLoading}
-          
+          required
           autoComplete="true"
-          data-test="password"
+          data-test="registry-name-input"
         />
 
         <Button
@@ -87,11 +87,14 @@ export default function Login() {
           ) : (
             "Cadastrar"
           )} */}
-          Entrar
+          Salvar {tipo == "entrada" ? "entrada" : "saída"}
         </Button>
       </Form>
-
-      <StyledLink to="/cadastro">Primeira vez? Cadastre-se!</StyledLink>
     </Container>
   );
 }
+
+const Container = styled.div`
+  min-height: 100vh;
+  padding: 25px;
+`;

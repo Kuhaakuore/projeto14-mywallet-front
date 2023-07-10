@@ -9,8 +9,8 @@ const Button = styled.button`
   font-weight: 600;
   color: #fff;
   cursor: pointer;
+  padding: 12px 0;
   width: 100%;
-  padding: 12px;
 `;
 
 export default Button;

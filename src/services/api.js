@@ -18,9 +18,18 @@ function login(body) {
     return promise;
 }
 
+function createTransaction(body, type, token) {
+    const config = createConfig(token);
+
+    const promise = axios.post(`${VITE_API_URL}/nova-transacao/${type}`, body, config);
+
+    return promise;
+}
+
 const api  = {
     login,
-    signUp
+    signUp,
+    createTransaction
 }
 
 export default api;
