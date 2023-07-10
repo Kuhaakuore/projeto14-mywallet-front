@@ -12,26 +12,29 @@ import {
   MessageContainer,
   TransactionsContainer,
 } from "./styled";
-import Transaction from "./Transaction";
+import Transaction from "../../components/Transaction";
+import LoadingScreen from "../../components/LoadingScreen";
 
 export default function Home() {
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState(undefined);
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { auth, logout } = useAuth();
   const [userName, setUserName] = useState(undefined);
   const [balance, setBalance] = useState(0);
 
   function loadTransactions() {
+    setIsLoading(true);
     const promise = api.getTransactions(auth);
     promise.then((res) => {
+      setIsLoading(false);
       setUserName(res.data.name);
       setTransactions(res.data.transactions.reverse());
       calculateBalance(res.data.transactions);
     });
 
     promise.catch((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       alert(res.response.data.message);
     });
   }
@@ -52,10 +55,14 @@ export default function Home() {
       "Tem certeza de que deseja excluir esta transação?"
     );
     if (!confirmation) return;
+    setIsLoading(true);
     const promise = api.deleteTransaction(_id, token);
-    promise.then(() => loadTransactions());
+    promise.then(() => {
+      setIsLoading(false);
+      loadTransactions();
+    });
     promise.catch((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       alert(res.response.data.message);
     });
   }
@@ -67,6 +74,14 @@ export default function Home() {
     }
     loadTransactions();
   }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
+  }
 
   return (
     <Container>

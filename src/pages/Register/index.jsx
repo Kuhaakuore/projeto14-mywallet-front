@@ -9,6 +9,7 @@ import {
   Button,
   StyledLink,
 } from "../../components/FormComponents";
+import LoadingScreen from "../../components/LoadingScreen";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Register() {
     password: "",
     passwordConfirm: "",
   });
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,19 +33,27 @@ export default function Register() {
       return;
     }
     delete formData.passwordConfirm;
-    // setIsLoading(true);
+    setIsLoading(true);
     const promise = api.signUp({
       ...formData,
     });
 
     promise.then(() => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       navigate("/");
     });
     promise.catch((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       alert(res.response.data.message);
     });
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
   }
 
   return (
@@ -58,7 +67,6 @@ export default function Register() {
           name="name"
           onChange={handleChange}
           value={formData.name}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           data-test="name"
@@ -69,7 +77,6 @@ export default function Register() {
           name="email"
           onChange={handleChange}
           value={formData.email}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           data-test="email"
@@ -80,7 +87,6 @@ export default function Register() {
           name="password"
           onChange={handleChange}
           value={formData.password}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           minLength={3}
@@ -93,23 +99,13 @@ export default function Register() {
           name="passwordConfirm"
           onChange={handleChange}
           value={formData.passwordConfirm}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           minLength={3}
           data-test="conf-password"
         />
 
-        <Button
-          type="submit"
-          // disabled={isLoading}
-          data-test="sign-up-submit"
-        >
-          {/* {isLoading ? (
-            <Loader type="ThreeDots" color="#FFFFFF" height={50} width={50} />
-          ) : (
-            "Cadastrar"
-          )} */}
+        <Button type="submit" data-test="sign-up-submit">
           Cadastrar
         </Button>
       </Form>

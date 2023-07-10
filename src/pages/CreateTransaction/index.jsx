@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import Header from "../../components/PageComponents/Header";
 import { styled } from "styled-components";
 import dayjs from "dayjs";
+import LoadingScreen from "../../components/LoadingScreen";
 
 export default function CreateTransaction() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function CreateTransaction() {
     value: "",
     description: "",
   });
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { auth } = useAuth();
   const { tipo } = useParams();
 
@@ -30,25 +31,33 @@ export default function CreateTransaction() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // setIsLoading(true);
+    setIsLoading(true);
     const promise = api.createTransaction(
       {
         ...formData,
-        date: dayjs().format("DD/MM")
+        date: dayjs().format("DD/MM"),
       },
       tipo,
       auth
     );
 
     promise.then((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       navigate("/home");
       console.log(res);
     });
     promise.catch((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       alert(res.response.data.message);
     });
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
   }
 
   return (
@@ -61,7 +70,6 @@ export default function CreateTransaction() {
           name="value"
           onChange={handleChange}
           value={formData.value}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           data-test="registry-amount-input"
@@ -72,22 +80,12 @@ export default function CreateTransaction() {
           name="description"
           onChange={handleChange}
           value={formData.description}
-          //   disabled={isLoading}
           required
           autoComplete="true"
           data-test="registry-name-input"
         />
 
-        <Button
-          type="submit"
-          // disabled={isLoading}
-          data-test="registry-save"
-        >
-          {/* {isLoading ? (
-            <Loader type="ThreeDots" color="#FFFFFF" height={50} width={50} />
-          ) : (
-            "Cadastrar"
-          )} */}
+        <Button type="submit" data-test="registry-save">
           Salvar {tipo == "entrada" ? "entrada" : "saída"}
         </Button>
       </Form>

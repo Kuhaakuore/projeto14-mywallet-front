@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { DeleteButton, TransactionContainer, Value } from "./styled";
-import useRegistry from "../../../hooks/useRegistry";
+import useRegistry from "../../hooks/useRegistry";
 
 export default function Transaction({
   _id,

@@ -10,6 +10,7 @@ import {
   StyledLink,
 } from "../../components/FormComponents";
 import useAuth from "../../hooks/useAuth";
+import LoadingScreen from "../../components/LoadingScreen";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,12 +18,11 @@ export default function Login() {
     email: "",
     password: "",
   });
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { auth, login } = useAuth();
 
   useEffect(() => {
     if (auth) {
-      console.log(auth);
       navigate("/home");
     }
   }, []);
@@ -34,20 +34,28 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // setIsLoading(true);
+    setIsLoading(true);
     const promise = api.login({
       ...formData,
     });
 
     promise.then((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       login(res.data);
       navigate("/home");
     });
     promise.catch((res) => {
-      //   setIsLoading(false);
+      setIsLoading(false);
       alert(res.response.data.message);
     });
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
   }
 
   return (
@@ -61,8 +69,6 @@ export default function Login() {
           name="email"
           onChange={handleChange}
           value={formData.email}
-          //   disabled={isLoading}
-          
           autoComplete="true"
           data-test="email"
         />
@@ -72,22 +78,11 @@ export default function Login() {
           name="password"
           onChange={handleChange}
           value={formData.password}
-          //   disabled={isLoading}
-          
           autoComplete="true"
           data-test="password"
         />
 
-        <Button
-          type="submit"
-          // disabled={isLoading}
-          data-test="sign-in-submit"
-        >
-          {/* {isLoading ? (
-            <Loader type="ThreeDots" color="#FFFFFF" height={50} width={50} />
-          ) : (
-            "Cadastrar"
-          )} */}
+        <Button type="submit" data-test="sign-in-submit">
           Entrar
         </Button>
       </Form>
