@@ -22,6 +22,7 @@ export default function Login() {
 
   useEffect(() => {
     if (auth) {
+      console.log(auth);
       navigate("/home");
     }
   }, []);
@@ -41,7 +42,7 @@ export default function Login() {
     promise.then((res) => {
       //   setIsLoading(false);
       login(res.data);
-      navigate("/nova-transacao/entrada");
+      navigate("/home");
     });
     promise.catch((res) => {
       //   setIsLoading(false);

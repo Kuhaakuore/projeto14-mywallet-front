@@ -20,6 +20,10 @@ const Header = styled.div`
     font-weight: 700;
     line-height: normal;
   }
+
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const MessageContainer = styled.div`
