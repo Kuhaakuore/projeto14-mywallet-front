@@ -26,10 +26,19 @@ function createTransaction(body, type, token) {
     return promise;
 }
 
+function getTransactions(token) {
+    const config = createConfig(token);
+
+    const promise = axios.get(`${VITE_API_URL}/home`, config);
+
+    return promise;
+}
+
 const api  = {
     login,
     signUp,
-    createTransaction
+    createTransaction,
+    getTransactions
 }
 
 export default api;

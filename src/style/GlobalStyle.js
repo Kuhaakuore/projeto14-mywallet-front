@@ -4,8 +4,6 @@ const GlobalStyle = createGlobalStyle`
 	* {
 		box-sizing: border-box;
 		font-family: 'Raleway';
-        font-style: normal;
-        font-weight: 400;
 	}
 `;
 
