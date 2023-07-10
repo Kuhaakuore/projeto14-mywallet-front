@@ -1,15 +1,20 @@
 import { Routes, Route } from "react-router";
 import Register from "./pages/Register";
 import { styled } from "styled-components";
+import { AuthProvider } from "./contexts/AuthContext";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <>
-    <Container>
-    <Routes>
-        <Route path="/cadastro" element={<Register />} />
-      </Routes>
-    </Container>
+      <AuthProvider>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<Register />} />
+          </Routes>
+        </Container>
+      </AuthProvider>
     </>
   );
 }

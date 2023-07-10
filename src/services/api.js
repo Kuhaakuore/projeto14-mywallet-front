@@ -12,7 +12,14 @@ function signUp(body) {
     return promise;
 }
 
+function login(body) {
+    const promise = axios.post(`${VITE_API_URL}/`, body);
+
+    return promise;
+}
+
 const api  = {
+    login,
     signUp
 }
 

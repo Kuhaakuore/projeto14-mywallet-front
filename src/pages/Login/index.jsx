@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
 import api from "../../services/api";
@@ -9,16 +9,22 @@ import {
   Button,
   StyledLink,
 } from "../../components/FormComponents";
+import useAuth from "../../hooks/useAuth";
 
-export default function Register() {
+export default function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    passwordConfirm: "",
   });
   //   const [isLoading, setIsLoading] = useState(false);
+  const { auth, login } = useAuth();
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/home");
+    }
+  }, []);
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,19 +33,15 @@ export default function Register() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (e.target.password.value !== e.target.passwordConfirm.value) {
-      alert("Os campos de senha precisam ter o mesmo valor!");
-      return;
-    }
-    delete formData.passwordConfirm;
     // setIsLoading(true);
-    const promise = api.signUp({
+    const promise = api.login({
       ...formData,
     });
 
-    promise.then(() => {
+    promise.then((res) => {
       //   setIsLoading(false);
-      navigate("/");
+      login(res.data);
+      navigate("/home");
     });
     promise.catch((res) => {
       //   setIsLoading(false);
@@ -53,24 +55,13 @@ export default function Register() {
 
       <Form onSubmit={handleSubmit}>
         <Input
-          type="text"
-          placeholder="Nome"
-          name="name"
-          onChange={handleChange}
-          value={formData.name}
-          //   disabled={isLoading}
-          required
-          autoComplete="true"
-          data-test="name"
-        />
-        <Input
           type="email"
           placeholder="E-mail"
           name="email"
           onChange={handleChange}
           value={formData.email}
           //   disabled={isLoading}
-          required
+          
           autoComplete="true"
           data-test="email"
         />
@@ -81,40 +72,26 @@ export default function Register() {
           onChange={handleChange}
           value={formData.password}
           //   disabled={isLoading}
-          required
+          
           autoComplete="true"
-          minLength={3}
           data-test="password"
-        />
-
-        <Input
-          type="password"
-          placeholder="Confirme sua senha"
-          name="passwordConfirm"
-          onChange={handleChange}
-          value={formData.passwordConfirm}
-          //   disabled={isLoading}
-          required
-          autoComplete="true"
-          minLength={3}
-          data-test="conf-password"
         />
 
         <Button
           type="submit"
           // disabled={isLoading}
-          data-test="sign-up-submit"
+          data-test="sign-in-submit"
         >
           {/* {isLoading ? (
             <Loader type="ThreeDots" color="#FFFFFF" height={50} width={50} />
           ) : (
             "Cadastrar"
           )} */}
-          Cadastrar
+          Entrar
         </Button>
       </Form>
 
-      <StyledLink to="/">Já tem uma conta? Entre agora!</StyledLink>
+      <StyledLink to="/cadastro">Primeira vez? Cadastre-se!</StyledLink>
     </Container>
   );
 }
