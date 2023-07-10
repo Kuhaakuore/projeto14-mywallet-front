@@ -19,6 +19,9 @@ const TransactionContainer = styled.div`
     padding-left: 7px;
     color: #000;
   }
+  a {
+    text-decoration: none;
+  }
 `;
 
 const Value = styled.div`

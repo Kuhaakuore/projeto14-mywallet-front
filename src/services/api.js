@@ -42,12 +42,21 @@ function deleteTransaction(_id, token) {
     return promise;
 }
 
+function editRegistry(body, tipo, id, token) {
+    const config = createConfig(token);
+    
+    const promise = axios.put(`${VITE_API_URL}/editar-registro/${tipo}/${id}`, body, config);
+
+    return promise;
+}
+
 const api  = {
     login,
     signUp,
     createTransaction,
     getTransactions,
-    deleteTransaction
+    deleteTransaction,
+    editRegistry
 }
 
 export default api;

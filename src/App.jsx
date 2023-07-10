@@ -5,22 +5,30 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import CreateTransaction from "./pages/CreateTransaction";
+import EditRegistry from "./pages/EditRegistry";
+import { RegistryProvider } from "./contexts/RegistryContext";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <Container>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/cadastro" element={<Register />} />
-            <Route path="/home" element={<Home />} />
-            <Route
-              path="/nova-transacao/:tipo"
-              element={<CreateTransaction />}
-            />
-          </Routes>
-        </Container>
+        <RegistryProvider>
+          <Container>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/cadastro" element={<Register />} />
+              <Route path="/home" element={<Home />} />
+              <Route
+                path="/nova-transacao/:tipo"
+                element={<CreateTransaction />}
+              />
+              <Route
+                path="/editar-registro/:tipo/:id"
+                element={<EditRegistry />}
+              />
+            </Routes>
+          </Container>
+        </RegistryProvider>
       </AuthProvider>
     </>
   );
