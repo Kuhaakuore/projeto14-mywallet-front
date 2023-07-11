@@ -10,6 +10,7 @@ import {
   Footer,
   Header,
   MessageContainer,
+  StyledLink,
   TransactionsContainer,
 } from "./styled";
 import Transaction from "../../components/Transaction";
@@ -137,7 +138,7 @@ export default function Home() {
       )}
       <Footer>
         <ButtonContainer>
-          <Link to={"/nova-transacao/entrada"}>
+          <StyledLink to={"/nova-transacao/entrada"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -155,14 +156,14 @@ export default function Home() {
                 fill="white"
               />
             </svg>
-          </Link>
+          </StyledLink>
           <p>
             Nova <br />
             entrada
           </p>
         </ButtonContainer>
         <ButtonContainer>
-          <Link to={"/nova-transacao/saida"}>
+          <StyledLink to={"/nova-transacao/saida"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -180,7 +181,7 @@ export default function Home() {
                 fill="white"
               />
             </svg>
-          </Link>
+          </StyledLink>
           <p>
             Nova <br />
             saída

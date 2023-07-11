@@ -41,10 +41,9 @@ export default function CreateTransaction() {
       auth
     );
 
-    promise.then((res) => {
-      setIsLoading(false);
+    promise.then(() => {
       navigate("/home");
-      console.log(res);
+      setIsLoading(false);
     });
     promise.catch((res) => {
       setIsLoading(false);
